@@ -1,0 +1,84 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// 用户
+model User {
+  id      Int          @id @default(autoincrement())
+  // 邮箱
+  email   String       @unique
+  name    String?
+  // 密码 HASH
+  pwd     String
+  // 2fa 密码
+  fa_pwds FAPassword[]
+  // 普通密码
+  pwds    Password[]
+  // 登录会话
+  session Session?
+}
+
+// 2FA 密码
+model FAPassword {
+  id        Int     @id @default(autoincrement())
+  user_id   Int
+  created   DateTime @default(now())
+  updated   DateTime @updatedAt
+  type      String // totp|hotp
+  issuer    String?
+  account   String
+  label     String
+  algotithm String
+  secret    String
+  digits    Int
+  period    Int?
+  counter   Int?
+  user      User    @relation(fields: [user_id], references: [id])
+}
+
+// 普通密码
+model Password {
+  id       Int    @id @default(autoincrement())
+  user_id  Int
+  created   DateTime @default(now())
+  updated   DateTime @updatedAt
+  // 标签
+  label    String
+  // 账号
+  account  String
+  // 密码 （HASH）
+  password String
+  // 描述
+  desc     String
+  user     User   @relation(fields: [user_id], references: [id])
+}
+
+// 会话
+model Session {
+  id         Int      @id @default(autoincrement())
+  user_id    Int      @unique
+  token      String
+  // 登录会话通信密钥
+  shared_key String
+  // 登录 IP
+  login_ip   String
+  // 过期时间
+  expired    DateTime
+  user       User     @relation(fields: [user_id], references: [id])
+}
+
+// 锁定 IP
+model LockIP {
+  id      Int     @id @default(autoincrement())
+  ip      String  @unique
+  created DateTime @default(now())
+  updated DateTime @updatedAt
+}

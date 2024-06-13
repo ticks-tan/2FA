@@ -1,3 +1,2 @@
-*.zip
-.xmake/
-build/
+cpp/
+node_modules/

@@ -1,0 +1,34 @@
+{
+  "name": "2fa_server",
+  "version": "0.0.1",
+  "description": "2fa application server",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc && tsc-alias",
+    "start": "node dist/index.js"
+  },
+  "author": "Ticks",
+  "license": "Apache-2.0",
+  "packageManager": "pnpm@9.1.4+sha512.9df9cf27c91715646c7d675d1c9c8e41f6fce88246f1318c1aa6a1ed1aeb3c4f032fcdf4ba63cc69c4fe6d634279176b5358727d8f2cc1e65b65f43ce2f8bfb0",
+  "devDependencies": {
+    "@types/crypto-js": "^4.2.2",
+    "@types/node": "^20.14.2",
+    "prisma": "^5.15.0",
+    "ts-node": "^10.9.2",
+    "tsc-alias": "^1.8.10",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "@fastify/cookie": "^9.3.1",
+    "@fastify/session": "^10.9.0",
+    "@prisma/client": "^5.15.0",
+    "crypto-js": "^4.2.0",
+    "curve25519-n": "^1.2.1",
+    "fastify": "^4.27.0",
+    "fastify-plugin": "^4.5.1",
+    "fastify-raw-body": "^4.3.0",
+    "otpauth": "^9.3.1"
+  }
+}
